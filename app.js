@@ -1,6 +1,8 @@
 const http = require('http');
 const { parse } = require('path');
 const url = require('url');
+const tools = require('./tools.js')
+const isPalindrome = tools.isPalindrome;
 
 const server = http.createServer((req, res) => {
     const parsedUrl = url.parse(req.url, true);
@@ -11,8 +13,9 @@ const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
     if (pathname === "/comprobar") {
-        let palabra = query.variant.toLowerCase();
-        // const {palabra} = query;
+        // let palabra = query.variant.toLowerCase();
+        const {palabra} = query;
+        console.log(palabra)
         if (isPalindrome(palabra) === true) {
             res.writeHead(200, 'Content-Type', 'text/plain; charset=utf-8');
             res.write(`La palabra ${palabra} es un palíndromo`);
@@ -42,11 +45,7 @@ server.listen(3000, () => {
     console.log("Listening to requests for 3000 port");
 })
 
-function isPalindrome(str) {
-    const net = str.toLowerCase().replace(/[^a-z0-9]/g, '');
-    const invers = net.split('').reverse().join('');
-    return net === invers;
-}
+
 
 /**
  * 
