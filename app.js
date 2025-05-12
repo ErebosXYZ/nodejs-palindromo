@@ -26,7 +26,6 @@ const server = http.createServer((req, res) => {
         }
 
     } if (pathname === "/") {
-        let palabraComprobar;
 
         res.writeHead(200, 'Content-Type', 'text/html; charset=utf-8');
         res.write(`<form action="/comprobar" method="GET">
