@@ -18,19 +18,23 @@ const server = http.createServer((req, res) => {
             res.write(`La palabra ${palabra} es un palíndromo`);
             res.end();
             return;
-        } else if (isPalindrome(palabra) === false) {
+        } else {
             res.writeHead(200, 'Content-Type', 'text/html; charset=utf-8');
             res.write(`La palabra ${palabra} no es un palíndromo`);
             res.end();
             return;
-        } else {
-            res.writeHead(200, 'Content-Type', 'text/html; charset=utf-8');
-            res.write(`<form action="">
-            <label for="">Palabra a comprobar:</label><br>
-            <input type="text" id="" name="" value=""><br>
+        }
+
+    } if (pathname === "/") {
+        let palabraComprobar;
+
+        res.writeHead(200, 'Content-Type', 'text/html; charset=utf-8');
+        res.write(`<form action="/comprobar" method="GET">
+            <label for="palabra">Palabra a comprobar:</label><br>
+            <input type="text" id="palabra" name="palabra" value=""><br>
             <input type="submit" value="Comprobar">
             </form> `);
-        }
+        res.end();
     }
 
 });
