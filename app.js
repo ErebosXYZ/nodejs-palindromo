@@ -1,34 +1,42 @@
 const http = require('http');
+const { parse } = require('path');
 const url = require('url');
 
 const server = http.createServer((req, res) => {
     const parsedUrl = url.parse(req.url, true);
-    const path = parsedUrl.pathname;
-    const query = parsedUrl.query;
-
+    // const pathname = parsedUrl.pathnamename;
+    // const query = parsedUrl.query;
+    const { pathname, query } = parsedUrl;
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-    if (path === "/comprobar") {
-        let queryString = query.variant.toLowerCase();
-
-        if (isPalindrome(queryString) === true) {
+    if (pathname === "/comprobar") {
+        let palabra = query.variant.toLowerCase();
+        // const {palabra} = query;
+        if (isPalindrome(palabra) === true) {
+            res.writeHead(200, 'Content-Type', 'text/plain; charset=utf-8');
+            res.write(`La palabra ${palabra} es un palíndromo`);
+            res.end();
+            return;
+        } else if (isPalindrome(palabra) === false) {
             res.writeHead(200, 'Content-Type', 'text/html; charset=utf-8');
-            res.write(`La palabra ${queryString} es un palíndromo`);
+            res.write(`La palabra ${palabra} no es un palíndromo`);
             res.end();
             return;
         } else {
             res.writeHead(200, 'Content-Type', 'text/html; charset=utf-8');
-            res.write(`La palabra ${queryString} no es un palíndromo`);
-            res.end();
-            return;
+            res.write(`<form action="">
+            <label for="">Palabra a comprobar:</label><br>
+            <input type="text" id="" name="" value=""><br>
+            <input type="submit" value="Comprobar">
+            </form> `);
         }
     }
 
 });
 
 server.listen(3000, () => {
-    console.log("Listening to requests for 3400 port");
+    console.log("Listening to requests for 3000 port");
 })
 
 function isPalindrome(str) {
